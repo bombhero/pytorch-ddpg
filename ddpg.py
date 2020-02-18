@@ -77,7 +77,7 @@ class DDPG(object):
         # Critic update
         self.critic.zero_grad()
 
-        q_batch = self.critic([ to_tensor(state_batch), to_tensor(action_batch) ])
+        q_batch = self.critic([to_tensor(state_batch), to_tensor(action_batch)])
         
         value_loss = criterion(q_batch, target_q_batch)
         value_loss.backward()
@@ -117,7 +117,7 @@ class DDPG(object):
             self.s_t = s_t1
 
     def random_action(self):
-        action = np.random.uniform(-1.,1.,self.nb_actions)
+        action = np.random.uniform(-1., 1., self.nb_actions)
         self.a_t = action
         return action
 
@@ -139,7 +139,8 @@ class DDPG(object):
         self.random_process.reset_states()
 
     def load_weights(self, output):
-        if output is None: return
+        if output is None:
+            return
 
         self.actor.load_state_dict(
             torch.load('{}/actor.pkl'.format(output))
@@ -149,8 +150,7 @@ class DDPG(object):
             torch.load('{}/critic.pkl'.format(output))
         )
 
-
-    def save_model(self,output):
+    def save_model(self, output):
         torch.save(
             self.actor.state_dict(),
             '{}/actor.pkl'.format(output)

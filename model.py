@@ -7,10 +7,12 @@ import torch.nn.functional as F
 
 from ipdb import set_trace as debug
 
+
 def fanin_init(size, fanin=None):
     fanin = fanin or size[0]
     v = 1. / np.sqrt(fanin)
     return torch.Tensor(size).uniform_(-v, v)
+
 
 class Actor(nn.Module):
     def __init__(self, nb_states, nb_actions, hidden1=400, hidden2=300, init_w=3e-3):
@@ -35,6 +37,7 @@ class Actor(nn.Module):
         out = self.fc3(out)
         out = self.tanh(out)
         return out
+
 
 class Critic(nn.Module):
     def __init__(self, nb_states, nb_actions, hidden1=400, hidden2=300, init_w=3e-3):
