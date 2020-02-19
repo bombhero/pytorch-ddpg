@@ -1,12 +1,11 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import savemat
 
 from util import *
 
-class Evaluator(object):
 
+class Evaluator(object):
     def __init__(self, num_episodes, interval, save_path='', max_episode_length=None):
         self.num_episodes = num_episodes
         self.max_episode_length = max_episode_length

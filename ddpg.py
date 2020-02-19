@@ -1,4 +1,3 @@
-
 import numpy as np
 
 import torch
@@ -13,6 +12,7 @@ from util import *
 # from ipdb import set_trace as debug
 
 criterion = nn.MSELoss()
+
 
 class DDPG(object):
     def __init__(self, nb_states, nb_actions, args):
@@ -56,13 +56,13 @@ class DDPG(object):
         self.a_t = None # Most recent action
         self.is_training = True
 
-        # 
-        if USE_CUDA: self.cuda()
+        if USE_CUDA:
+            self.cuda()
 
     def update_policy(self):
         # Sample batch
-        state_batch, action_batch, reward_batch, \
-        next_state_batch, terminal_batch = self.memory.sample_and_split(self.batch_size)
+        state_batch, action_batch, reward_batch, next_state_batch, terminal_batch = \
+            self.memory.sample_and_split(self.batch_size)
 
         # Prepare for the target q batch
         next_q_values = self.critic_target([
