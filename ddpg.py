@@ -40,7 +40,7 @@ class DDPG(object):
         hard_update(self.actor_target, self.actor) # Make sure target is with the same weight
         hard_update(self.critic_target, self.critic)
         
-        #Create replay buffer
+        # Create replay buffer
         self.memory = SequentialMemory(limit=args.rmsize, window_length=args.window_length)
         self.random_process = OrnsteinUhlenbeckProcess(size=nb_actions, theta=args.ou_theta, mu=args.ou_mu, sigma=args.ou_sigma)
 
@@ -69,7 +69,7 @@ class DDPG(object):
             to_tensor(next_state_batch, volatile=True),
             self.actor_target(to_tensor(next_state_batch, volatile=True)),
         ])
-        next_q_values.volatile=False
+        next_q_values.volatile = False
 
         target_q_batch = to_tensor(reward_batch) + \
             self.discount*to_tensor(terminal_batch.astype(np.float))*next_q_values
@@ -160,7 +160,8 @@ class DDPG(object):
             '{}/critic.pkl'.format(output)
         )
 
-    def seed(self,s):
+    @staticmethod
+    def seed(self, s):
         torch.manual_seed(s)
         if USE_CUDA:
             torch.cuda.manual_seed(s)
